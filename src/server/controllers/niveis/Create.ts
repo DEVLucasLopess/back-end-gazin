@@ -17,5 +17,8 @@ export const createValidation = validation('body', dataValidation);
 
 export const create: RequestHandler = async (req, res) => {
   res.send({ message: "Create Niveis", data: req.body });
+
+  
+
   return;
 };

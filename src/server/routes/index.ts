@@ -7,6 +7,7 @@ router.get("/", (_, res) => {
 });
 
 router.post("/niveis", NiveisController.createValidation, NiveisController.create);
+
 router.get("/niveis", NiveisController.getAllValidations, NiveisController.getAll);
 router.get("/niveis/:id", NiveisController.getByIdValidations, NiveisController.getById);
 router.put("/niveis/:id", NiveisController.updateValidationsBody,NiveisController.updateValidationsParams, NiveisController.update);
