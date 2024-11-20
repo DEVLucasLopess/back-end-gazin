@@ -1,14 +1,17 @@
 import { Router } from "express";
-import { StatusCodes } from 'http-status-codes'
+import { NiveisController } from "./../controllers";
 
 const router = Router();
 
-router.get("/", (req, res) => {
-  res.send("Hello World!");
+router.get("/", (_, res) => {
+  res.send("Hello Dev!");
 });
 
-router.post('/teste', (req: any, res: any) => {
-  return res.status(StatusCodes.UNAUTHORIZED).json(req.body);
-});
+router.post(
+  "/niveis",
+  NiveisController.createBodyValidation,
+  NiveisController.createValidation,
+  NiveisController.create
+);
 
 export { router };
