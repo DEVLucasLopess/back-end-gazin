@@ -1,12 +1,13 @@
 import { RequestHandler } from "express";
 import * as yup from "yup";
 import { validation } from "../../shared/middlewares";
+import { INiveis } from "../../database/models";
+import { NiveisProvider } from "../../database/providers/nivel";
+import { StatusCodes } from "http-status-codes";
 
-type NiveisType = {
-  nivel: string;
-};
+interface IBodyProps extends INiveis {};
 
-const dataValidation: yup.ObjectSchema<NiveisType> = yup.object({
+const dataValidation: yup.ObjectSchema<IBodyProps> = yup.object({
   nivel: yup
     .string()
     .required("Nível é um campo obrigatório")
@@ -16,9 +17,17 @@ const dataValidation: yup.ObjectSchema<NiveisType> = yup.object({
 export const createValidation = validation('body', dataValidation);
 
 export const create: RequestHandler = async (req, res) => {
-  res.send({ message: "Create Niveis", data: req.body });
-
   
+  const result = await NiveisProvider.create(req.body);
+  
+  if(result instanceof Error) {
+   res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      errors: {
+        default: result.message,
+      }
+    });
+    return;
+  }
 
-  return;
+  res.status(StatusCodes.CREATED).json(result);
 };

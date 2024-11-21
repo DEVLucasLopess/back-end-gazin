@@ -1,14 +1,13 @@
 import { RequestHandler } from "express";
 import * as yup from "yup";
 import { validation } from "../../shared/middlewares";
+import { INiveis } from "../../database/models";
 
 interface IQueryPropsId {
   id?: number;
 }
 
-interface IParamsPropsId {
-  nome: string;
-}
+interface IParamsPropsId extends INiveis {}
 
 const getByIdValidation: yup.ObjectSchema<IQueryPropsId> = yup.object({
   id: yup
@@ -18,7 +17,8 @@ const getByIdValidation: yup.ObjectSchema<IQueryPropsId> = yup.object({
 });
 
 const getByIdValidationName: yup.ObjectSchema<IParamsPropsId> = yup.object({
-  nome: yup
+  id: yup.number().required("Id é um campo obrigatório"),
+  nivel: yup
     .string()
     .min(3, "precisa ter no minimo 3 caracteres no nível")
     .typeError("Error, esse campo tem que ser númerico e ele é obrigatório!")

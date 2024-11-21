@@ -6,7 +6,7 @@ export async function up(knex: Knex) {
     .schema
     .createTable(ETableNames.nivel, table => {
         table.bigIncrements('id').primary().index();
-        table.string('nome', 150).index().notNullable();
+        table.string('nivel', 150).index().notNullable();
 
         table.comment('tabela de niveis dos usuários');
     }).then(() => {
