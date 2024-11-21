@@ -13,22 +13,22 @@ export const development: Knex.Config = {
     },
 
     seeds: {
-        directory: path.resolve(__dirname, '..', 'migrations')
+        directory: path.resolve(__dirname, '..', 'seeds')
     },
 
     pool: {
-        afterCreate: (connection: any, done: any) => {
+        afterCreate: (connection: any, done: Function) => {
             connection.run('PRAGMA foreign_keys = ON');
             done();
         }
     }
 };
 
-export const production = {
+export const production: Knex.Config = {
     ...development,
     connection: ':memory:',
 };
 
-export const test = {
+export const test: Knex.Config = {
     ...development,
 };
